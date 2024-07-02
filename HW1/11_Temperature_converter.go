@@ -12,5 +12,5 @@ func main() {
 	fmt.Print("Введите температуру в градусах Цельсия: ")
 	fmt.Scan(&celsius)
 	fahrenheit := CelsiusToFahrenheit(celsius)
-	fmt.Printf("Температура в градусах Фаренгейта: %.2f\n", fahrenheit)
+	fmt.Printf("Температура в градусах Фаренгейта: %.1f\n", fahrenheit)
 }
