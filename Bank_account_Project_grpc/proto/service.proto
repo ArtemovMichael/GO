@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+option go_package = "Bank_account_Project_grpc/proto";
+
+package proto;
+
+service BankAccountService {
+  rpc Create(CreateRequest) returns (CreateResponse);
+  rpc Get(GetRequest) returns (GetResponse);  
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
+  rpc UpdateAmount(UpdateAmountRequest) returns (UpdateAmountResponse);
+  rpc UpdateName(UpdateNameRequest) returns (UpdateNameResponse);
+
+}
+
+message CreateRequest {
+  string name = 1;
+  double amount = 2;
+}
+
+message CreateResponse {
+  string name = 1;
+  double amount = 2;
+}
+
+message GetRequest {
+  string name = 1;
+}
+
+message GetResponse {
+  string name = 1;
+  double amount = 2;
+}
+
+message DeleteRequest {
+  string name = 1;
+}
+
+message DeleteResponse {
+  string name = 1;
+}
+
+message UpdateAmountRequest {
+  string name = 1;
+  double amount = 2;
+}
+
+message UpdateAmountResponse {
+  string name = 1;
+  double amount = 2;
+}
+
+message UpdateNameRequest {
+  string name = 1;
+  string newName = 2;
+}
+
+message UpdateNameResponse {
+  string name = 1;
+  string newName = 2;
+}
