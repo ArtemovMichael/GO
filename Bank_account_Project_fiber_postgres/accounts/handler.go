@@ -13,6 +13,28 @@ import (
 
 const connectionString = "host=0.0.0.0 port=5432 dbname=postgres user=postgres password=0000"
 
+var db *sql.DB
+
+func Connect() error {
+	var err error
+	db, err = sql.Open("pgx", connectionString)
+	if err != nil {
+		return err
+	}
+
+	if err := db.Ping(); err != nil {
+		return err
+	}
+
+	defer func() {
+		if err != nil {
+			_ = db.Close()
+		}
+	}()
+
+	return nil
+}
+
 func IsAccountExists(name string, db *sql.DB) bool {
 	ctx := context.Background()
 
@@ -42,46 +64,23 @@ func CreateAccount(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Name is empty"})
 	}
 
-	db, err := sql.Open("pgx", connectionString)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	defer db.Close()
-
-	if err := db.Ping(); err != nil {
-		log.Fatal(err)
-	}
-
 	ctx := context.Background()
 
 	if IsAccountExists(request.Name, db) {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Account already exists"})
 	}
 
-	_, err = db.ExecContext(ctx, "INSERT INTO accounts (name, amount) VALUES ($1, $2)", request.Name, request.Amount)
+	_, err := db.ExecContext(ctx, "INSERT INTO accounts (name, amount) VALUES ($1, $2)", request.Name, request.Amount)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	return c.Status(http.StatusCreated).JSON(fiber.Map{"message": "Account created"})
-
 }
 
 func GetAccount(c *fiber.Ctx) error {
 	name := c.Params("name")
-
-	db, err := sql.Open("pgx", connectionString)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	defer db.Close()
-
-	if err := db.Ping(); err != nil {
-		log.Fatal(err)
-	}
 
 	ctx := context.Background()
 
@@ -112,24 +111,13 @@ func GetAccount(c *fiber.Ctx) error {
 func DeleteAccount(c *fiber.Ctx) error {
 	name := c.Params("name")
 
-	db, err := sql.Open("pgx", connectionString)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	defer db.Close()
-
-	if err := db.Ping(); err != nil {
-		log.Fatal(err)
-	}
-
 	ctx := context.Background()
 
 	if !IsAccountExists(name, db) {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Account does not exist"})
 	}
 
-	_, err = db.ExecContext(ctx, "DELETE FROM accounts WHERE name = $1", name)
+	_, err := db.ExecContext(ctx, "DELETE FROM accounts WHERE name = $1", name)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -145,24 +133,13 @@ func UpdateAccountName(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse request"})
 	}
 
-	db, err := sql.Open("pgx", connectionString)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	defer db.Close()
-
-	if err := db.Ping(); err != nil {
-		log.Fatal(err)
-	}
-
 	ctx := context.Background()
 
 	if !IsAccountExists(old_name, db) {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Account does not exist"})
 	}
 
-	_, err = db.ExecContext(ctx, "UPDATE accounts SET name = $1 WHERE name = $2", new_name.NewName, old_name)
+	_, err := db.ExecContext(ctx, "UPDATE accounts SET name = $1 WHERE name = $2", new_name.NewName, old_name)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -178,24 +155,13 @@ func UpdateAccountAmount(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse request"})
 	}
 
-	db, err := sql.Open("pgx", connectionString)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	defer db.Close()
-
-	if err := db.Ping(); err != nil {
-		log.Fatal(err)
-	}
-
 	ctx := context.Background()
 
 	if !IsAccountExists(name, db) {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Account does not exist"})
 	}
 
-	_, err = db.ExecContext(ctx, "UPDATE accounts SET amount = $1 WHERE name = $2", new_amount.Amount, name)
+	_, err := db.ExecContext(ctx, "UPDATE accounts SET amount = $1 WHERE name = $2", new_amount.Amount, name)
 	if err != nil {
 		log.Fatal(err)
 	}

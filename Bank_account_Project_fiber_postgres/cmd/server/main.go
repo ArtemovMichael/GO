@@ -12,6 +12,10 @@ import (
 
 func main() {
 
+	if err := accounts.Connect(); err != nil {
+		log.Fatal(err)
+	}
+
 	app := fiber.New()
 
 	app.Post("/account", accounts.CreateAccount)
