@@ -3,56 +3,12 @@ package accounts
 import (
 	"Bank_account_Project_fiber_postgres/accounts/dto"
 	"context"
-	"database/sql"
 	"log"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
 	_ "github.com/jackc/pgx/v5/stdlib"
 )
-
-const connectionString = "host=0.0.0.0 port=5432 dbname=postgres user=postgres password=0000"
-
-var db *sql.DB
-
-func Connect() error {
-	var err error
-	db, err = sql.Open("pgx", connectionString)
-	if err != nil {
-		return err
-	}
-
-	if err := db.Ping(); err != nil {
-		return err
-	}
-
-	defer func() {
-		if err != nil {
-			_ = db.Close()
-		}
-	}()
-
-	return nil
-}
-
-func IsAccountExists(name string, db *sql.DB) bool {
-	ctx := context.Background()
-
-	rows, err := db.QueryContext(ctx, "SELECT name FROM accounts WHERE name = $1", name)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	defer func() {
-		_ = rows.Close()
-	}()
-
-	for rows.Next() {
-		return true
-	}
-
-	return false
-}
 
 func CreateAccount(c *fiber.Ctx) error {
 	var request dto.CreateAccountRequest
@@ -66,7 +22,8 @@ func CreateAccount(c *fiber.Ctx) error {
 
 	ctx := context.Background()
 
-	if IsAccountExists(request.Name, db) {
+	db := dto.GetDB()
+	if dto.IsAccountExists(request.Name, db) {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Account already exists"})
 	}
 
@@ -84,7 +41,8 @@ func GetAccount(c *fiber.Ctx) error {
 
 	ctx := context.Background()
 
-	if !IsAccountExists(name, db) {
+	db := dto.GetDB()
+	if !dto.IsAccountExists(name, db) {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Account does not exist"})
 	}
 
@@ -113,7 +71,8 @@ func DeleteAccount(c *fiber.Ctx) error {
 
 	ctx := context.Background()
 
-	if !IsAccountExists(name, db) {
+	db := dto.GetDB()
+	if !dto.IsAccountExists(name, db) {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Account does not exist"})
 	}
 
@@ -135,7 +94,8 @@ func UpdateAccountName(c *fiber.Ctx) error {
 
 	ctx := context.Background()
 
-	if !IsAccountExists(old_name, db) {
+	db := dto.GetDB()
+	if !dto.IsAccountExists(old_name, db) {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Account does not exist"})
 	}
 
@@ -157,7 +117,8 @@ func UpdateAccountAmount(c *fiber.Ctx) error {
 
 	ctx := context.Background()
 
-	if !IsAccountExists(name, db) {
+	db := dto.GetDB()
+	if !dto.IsAccountExists(name, db) {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Account does not exist"})
 	}
 

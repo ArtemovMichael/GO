@@ -5,14 +5,14 @@ import (
 	"log"
 
 	"Bank_account_Project_fiber_postgres/accounts"
+	"Bank_account_Project_fiber_postgres/accounts/dto"
 
 	"github.com/gofiber/fiber/v2"
 	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
 func main() {
-
-	if err := accounts.Connect(); err != nil {
+	if err := dto.Connect(); err != nil {
 		log.Fatal(err)
 	}
 
