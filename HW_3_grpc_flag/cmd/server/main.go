@@ -1,6 +1,8 @@
 package main
 
 import (
+	"HW_3_grpc_flag/accounts/models"
+	"HW_3_grpc_flag/proto"
 	"context"
 	"errors"
 	"fmt"
@@ -8,9 +10,6 @@ import (
 	"sync"
 
 	"google.golang.org/grpc"
-
-	"Bank_account_Project_grpc/accounts/models"
-	"Bank_account_Project_grpc/proto"
 )
 
 func New() *server {

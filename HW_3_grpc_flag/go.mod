@@ -1,15 +1,10 @@
-module Bank_account_Project_grpc
+module HW_3_grpc_flag
 
 go 1.22.2
 
 require (
 	google.golang.org/grpc v1.65.0
 	google.golang.org/protobuf v1.34.2
-)
-
-require (
-	github.com/inconshreveable/mousetrap v1.1.0 // indirect
-	github.com/spf13/pflag v1.0.5 // indirect
 )
 
 require (

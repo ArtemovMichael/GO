@@ -1,13 +1,12 @@
 package main
 
 import (
+	"HW_3_grpc_flag/proto"
 	"flag"
 	"fmt"
 	"time"
 
 	"context"
-
-	"Bank_account_Project_grpc/proto"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
