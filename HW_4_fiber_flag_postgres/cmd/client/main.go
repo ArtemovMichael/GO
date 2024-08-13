@@ -1,7 +1,7 @@
 package main
 
 import (
-	"HW_4_fiber_postgres/accounts/dto"
+	"HW_4_fiber_flag_postgres/accounts/dto"
 	"bytes"
 	"encoding/json"
 	"flag"

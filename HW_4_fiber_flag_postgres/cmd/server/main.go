@@ -1,13 +1,12 @@
 package main
 
 import (
-
+	"HW_4_fiber_flag_postgres/accounts"
+	"HW_4_fiber_flag_postgres/accounts/dto"
+	
 	"fmt"
 	"log"
 
-	"HW_4_fiber_postgres/accounts"
-	"HW_4_fiber_postgres/accounts/dto"
-	
 	"github.com/gofiber/fiber/v2"
 	_ "github.com/jackc/pgx/v5/stdlib"
 )

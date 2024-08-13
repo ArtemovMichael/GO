@@ -1,4 +1,4 @@
-module HW_4_fiber_postgres
+module HW_4_fiber_flag_postgres
 
 go 1.22.2
 
