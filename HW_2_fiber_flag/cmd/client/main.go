@@ -1,7 +1,7 @@
 package main
 
 import (
-	"Bank_account_Project/accounts/dto"
+	"HW_2_fiber_flag/accounts/dto"
 	"bytes"
 	"encoding/json"
 	"flag"
@@ -218,7 +218,7 @@ func (cmd *Command) ChangeName() error {
 }
 
 func main() {
-	portVal := flag.Int("port", 8080, "server port")
+	portVal := flag.Int("port", 3000, "server port")
 	hostVal := flag.String("host", "0.0.0.0", "server host")
 	cmdVal := flag.String("cmd", "", "command to execute")
 	nameVal := flag.String("name", "", "name of account")

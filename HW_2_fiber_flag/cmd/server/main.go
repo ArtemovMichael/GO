@@ -1,9 +1,8 @@
 package main
 
 import (
+	"HW_2_fiber_flag/accounts"
 	"log"
-
-	"Bank_account_Project/accounts"
 
 	"github.com/gofiber/fiber/v2"
 )

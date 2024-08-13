@@ -1,8 +1,8 @@
 package accounts
 
 import (
-	"Bank_account_Project/accounts/dto"
-	"Bank_account_Project/accounts/models"
+	"HW_2_fiber_flag/accounts/dto"
+	"HW_2_fiber_flag/accounts/models"
 	"net/http"
 	"sync"
 
