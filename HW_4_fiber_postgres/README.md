@@ -6,9 +6,9 @@
 3. Далее создаем базу данных ```CREATE TABLE accounts(name varchar(256) PRIMARY KEY, amount int not null default 0);```.
 4. С помощью команды ```SELECT * FROM "accounts";``` можно вывести нашу базу данных.
 
-Чтобы запустить сервер необходимо перейти в директорию ```/GO/Bank_account_Project_fiber_postgres/cmd/server``` и прописать ```go run main.go```.
+Чтобы запустить сервер необходимо перейти в директорию ```/GO/HW_4_fiber_postgres/cmd/server``` и прописать ```go run main.go```.
 
-Чтобы запустить клиента необходимо перейти в директорию ```/GO/Bank_account_Project_fiber_postgres/cmd/client``` и можно выполнить следующие 5 запросов:
+Чтобы запустить клиента необходимо перейти в директорию ```/GO/HW_4_fiber_postgres/cmd/client``` и можно выполнить следующие 5 запросов:
 1. Создание аккаунта ```go run main.go -cmd create -name "name" -amount "amount"```.
 2. Получение баланса по имени ```go run main.go -cmd get -name "name"```.
 3. Удаление аккаунта по имени ```go run main.go -cmd delete -name "name"```.
