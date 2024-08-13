@@ -17,5 +17,6 @@
 
 
 Чтобы закрыть докер необходимо написать:
-1. ```docker container stop "CONTAINER ID"```.
-2. ```docker container rm "CONTAINER ID"```.
+1. ```docker ps```, чтобы узнать CONTAINER ID.
+2. ```docker container stop "CONTAINER ID"```.
+3. ```docker container rm "CONTAINER ID"```.
